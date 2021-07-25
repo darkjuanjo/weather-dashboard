@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"href="./assets/css/style.css"/>
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <div id="container" class="container">
+            <div id="search-block" class="search-block">
+                <form>
+                    <div id="label-container">
+                        <label id="search-label" for="search">Search for a City:</label>
+                    </div>
+                    <div id="search-container">
+                        <input id="search"type="text" placeholder="City">
+                    </div>
+                    <div id="button-container">
+                        <button class="button color-blue">Search</button>
+                    </div>
+                </form>
+                <div id="class history">
+                    <button class="button color-grey">Test</button>
+                    <button class="button color-grey">Test</button>
+                    <button class="button color-grey">Test</button>
+                    <button class="button color-grey">Test</button>
+                    <button class="button color-grey">Test</button>
+                </div>
+            </div>
+            <div id="weather-block" class="weather-block">
+                <div  id="current-weather">
+                    <h2>Atlanta (3/30/2021)<span id="current-icon"> icon</span></h2>
+                    <h3>Temp: 74.01</h3>
+                    <h3>Wind: 6.67 MPH</h3>
+                    <h3>Humidity: 46 %</h3>
+                    <h3>UV Index:<span id="air-quality">0.47</span></h3>
+                </div>
+                <div id="forecast">
+                    <div id="forecast-title">
+                        <h3>5-Day Forecast:</h3>
+                    </div>
+                    <div class="card">
+                        <h4 >3/28/2021</h4>
+                        <p>Icon</p>
+                        <p>Temp: 74.01</p>
+                        <p>Wind: 6.67 MPH</p>
+                        <p>Humidity: 46 %</p>
+                    </div>
+                    <div class="card">
+                        <h4 >3/29/2021</h4>
+                        <p>Icon</p>
+                        <p>Temp: 74.01</p>
+                        <p>Wind: 6.67 MPH</p>
+                        <p>Humidity: 46 %</p>
+                    </div>
+                    <div class="card">
+                        <h4 >3/30/2021</h4>
+                        <p>Icon</p>
+                        <p>Temp: 74.01</p>
+                        <p>Wind: 6.67 MPH</p>
+                        <p>Humidity: 46 %</p>
+                    </div>
+                    <div class="card">
+                        <h4 >3/31/2021</h4>
+                        <p>Icon</p>
+                        <p>Temp: 74.01</p>
+                        <p>Wind: 6.67 MPH</p>
+                        <p>Humidity: 46 %</p>
+                    </div>
+                    <div class="card">
+                        <h4 >4/1/2021</h4>
+                        <p>Icon</p>
+                        <p>Temp: 74.01</p>
+                        <p>Wind: 6.67 MPH</p>
+                        <p>Humidity: 46 %</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </main>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
