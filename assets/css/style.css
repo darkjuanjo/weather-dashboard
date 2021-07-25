@@ -91,12 +91,41 @@ button.color-grey:hover {
 
 #current-weather h2 {
     font-size: 2rem;
-
+    font-weight: bolder;
 }
 
 #current-weather h3 {
-    font-weight: normal;
     margin: 15px 0;
+}
+
+#uv-good{
+ background-color: rgb(41,149,1);
+ padding: 5px 10px;
+ border-radius: 5px;
+}
+
+#uv-ok{
+ background-color: rgb(247,228,1);
+ padding: 5px 10px;
+ border-radius: 5px;
+}
+
+#uv-bad{
+background-color: rgb(249,89,1);
+padding: 5px 10px;
+border-radius: 5px;
+}
+
+#uv-danger{
+    background-color: rgb(217,0,17);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#uv-death{
+    background-color: rgb(108,79,203);
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 #forecast {
