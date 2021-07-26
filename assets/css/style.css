@@ -94,6 +94,30 @@ button.color-grey:hover {
     background-color: rgb(114, 114, 114);
 }
 
+#radio-button-container {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+#radio-button-container label {
+font-size: 1.1rem;
+margin: 10px 5px;
+}
+
+#radio-button-container span {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0 10px
+}
+
+.radio-button {
+    width: 20px;
+    height: 20px;
+    margin: 10px 0;
+}
+
 #weather-block {
     display: flex;
     flex-wrap: wrap;

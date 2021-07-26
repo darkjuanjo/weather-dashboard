@@ -3,13 +3,21 @@ var searchbuttonEl = document.getElementById("button-container");
 var current_weatherEl = document.getElementById("current-weather");
 var forecastEl = document.getElementById("forecast");
 var historyEl = document.getElementById("history");
+var unit_selection = document.getElementsByName("unit");
 
 
 //fetch weather data
 var getWeather = (city) => {
   var key =  "f7bc6ba9663ff374404b0d7dc50e859d";
   var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
-  var units = "imperial"; //imperial/metric
+  if(unit_selection[0].checked)
+  {
+     var units = unit_selection[0].value;
+  }
+  else {
+    var units = unit_selection[1].value;
+  }
+  
     fetch(apiUrl)
     .then(response => {
         if(response.ok)
@@ -86,6 +94,7 @@ var reset = () => {
 //get city from input textbox
 var getCity = () => {
 city = citysearchEl.value;
+console.log()
     if(city) {
         getWeather(city);
         save_data(city);
