@@ -12,8 +12,8 @@
         <h1>Weather Dashboard</h1>
     </header>
     <main>
-        <div id="container" class="container">
-            <div id="search-block" class="search-block">
+        <div id="container">
+            <div id="search-block">
                 <form>
                     <div id="label-container">
                         <label id="search-label" for="search">Search for a City:</label>
@@ -33,52 +33,16 @@
                     <button class="button color-grey">Test</button>
                 </div>
             </div>
-            <div id="weather-block" class="weather-block">
+            <div id="weather-block">
+                <!-- current weather block -->
                 <div  id="current-weather"></div>
+                <!-- forecast block -->
                 <div id="forecast">
-                    <div id="forecast-title">
-                        <h3>5-Day Forecast:</h3>
-                    </div>
-                    <div class="card">
-                        <h4 >3/28/2021</h4>
-                        <p>Icon</p>
-                        <p>Temp: 74.01</p>
-                        <p>Wind: 6.67 MPH</p>
-                        <p>Humidity: 46 %</p>
-                    </div>
-                    <div class="card">
-                        <h4 >3/29/2021</h4>
-                        <p>Icon</p>
-                        <p>Temp: 74.01</p>
-                        <p>Wind: 6.67 MPH</p>
-                        <p>Humidity: 46 %</p>
-                    </div>
-                    <div class="card">
-                        <h4 >3/30/2021</h4>
-                        <p>Icon</p>
-                        <p>Temp: 74.01</p>
-                        <p>Wind: 6.67 MPH</p>
-                        <p>Humidity: 46 %</p>
-                    </div>
-                    <div class="card">
-                        <h4 >3/31/2021</h4>
-                        <p>Icon</p>
-                        <p>Temp: 74.01</p>
-                        <p>Wind: 6.67 MPH</p>
-                        <p>Humidity: 46 %</p>
-                    </div>
-                    <div class="card">
-                        <h4 >4/1/2021</h4>
-                        <p>Icon</p>
-                        <p>Temp: 74.01</p>
-                        <p>Wind: 6.67 MPH</p>
-                        <p>Humidity: 46 %</p>
-                    </div>
+                    <div id="forecast-title"></div>
                 </div>
+                <!--This is the end of forcast-->
             </div>
-            <div>
-
-            </div>
+            <!--This is the end of weather block-->
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

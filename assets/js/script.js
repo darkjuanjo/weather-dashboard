@@ -1,6 +1,8 @@
 var citysearchEl = document.getElementById("search");
 var searchbuttonEl = document.getElementById("button-container");
 var current_weatherEl = document.getElementById("current-weather");
+var forecastEl = document.getElementById("forecast");
+
 
 //fetch weather data
 var getWeather = (city) => {
@@ -21,16 +23,24 @@ var getWeather = (city) => {
                             response.json()
                             .then(data2 => set_current_weather(data.name,data.sys.country,units,data2));
                         } else {
-                            "Response error on onecall fetch"
+                           console.log("Response error on onecall fetch");
+                           current_weatherEl.textContent = "No Response from Openweather API";
+                           current_weatherEl.classList.remove("black-border");
                         }
                     })
 
             });       
         } else {
-            console.log("Response error on current weather fetch!");
+            console.log("Response error on current weather fetch");
+            current_weatherEl.textContent = "No Response from Openweather API";
+            current_weatherEl.classList.remove("black-border");
         }
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+        console.log("No Internet Connection");
+            current_weatherEl.textContent = "No Internet Connection";
+            current_weatherEl.classList.remove("black-border");
+    });
 };
 
 //get city from input textbox
@@ -58,6 +68,16 @@ city = citysearchEl.value;
         var humidityEl = document.createElement("h3");
         var uv_indexEl = document.createElement("h3");
         var riskfactorEl = document.createElement("span");
+
+        //Reset Variables
+        titleEl.textContent = "";
+        iconEl.src = "";
+        tempEl.textContent = "";
+        windEl.textContent = "";
+        humidityEl.textContent = "";
+        uv_indexEl.textContent = "";
+        riskfactorEl.textContent = "";
+        riskfactorEl.id = "";
         
         //Add text to DOM Elements
             titleEl.textContent = `${city}, ${country} (${date})`;
@@ -100,11 +120,76 @@ city = citysearchEl.value;
         current_weatherEl.appendChild(humidityEl);
         uv_indexEl.appendChild(riskfactorEl);
         current_weatherEl.appendChild(uv_indexEl);
+
+        //Add border to current weather container
+        current_weatherEl.className = "black-border"
+
+            //set 5-day forecast
+            set_forecast(date,data.daily,unit);
+    }    
+ };
+
+ var set_forecast = (date,data,unit) => {
+
+    //Reset Variables
+    while(forecastEl.firstChild){
+        forecastEl.removeChild(forecastEl.firstChild);
+    }
+
+    //5-Day Forecast Title Text
+    var forecast_titleEl = document.createElement("div");
+    forecast_titleEl.id = "forecast-title";
+    var titleEl = document.createElement("h3");
+    titleEl.textContent = "5-Day Forecast:";
+    forecast_titleEl.appendChild(titleEl);
+    forecastEl.appendChild(forecast_titleEl);
+   
+    //Generate cards with 5 day forecast
+    for(let i = 1; i < 6; i++)
+    {
+        //Generate DOM Elements
+        var cardEl = document.createElement("div");
+        var forecastdate = document.createElement("h4");
+        var icon_container = document.createElement("p");
+        var icon = document.createElement("img");
+        var tempEl = document.createElement("p");
+        var windEl = document.createElement("p");
+        var humidityEl = document.createElement("p");
+
+        //Add class to card
+        cardEl.className = "card";
+
+        //Generate days
+        forecastdate.textContent = moment(date, "M/D/YYYY").add(i,"days").format("M/D/YYYY");
+
+        //Get Icon
+        icon.src = `http://openweathermap.org/img/wn/${data[i].weather[0].icon}.png`;
+
+        //Get temperature and wind speed
+        if(unit === "imperial"){
+            tempEl.textContent = `Temp: ${data[i].temp.day}°F`;
+            windEl.textContent = `Wind: ${data[i].wind_speed} MPH`;
+        } else if (unit === "metric") {
+            tempEl.textContent = `Temp: ${data[i].temp.day}°C`;
+            windEl.textContent = `Wind: ${data[i].wind_speed} KPH`;
+        }
+
+        //Get Humidity
+        humidityEl.textContent = `Humidity: ${data[i].humidity} %`;
+
+        //Add to forecast container
+        icon_container.appendChild(icon);
+        cardEl.appendChild(forecastdate);
+        cardEl.appendChild(icon_container);
+        cardEl.appendChild(tempEl);
+        cardEl.appendChild(windEl);
+        cardEl.appendChild(humidityEl);
+        forecastEl.appendChild(cardEl);
     }
  };
 
 //add click event to search button
 searchbuttonEl.onclick = getCity;
-getWeather("Calexico");
+
 
 
