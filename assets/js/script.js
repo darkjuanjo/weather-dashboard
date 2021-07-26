@@ -2,6 +2,7 @@ var citysearchEl = document.getElementById("search");
 var searchbuttonEl = document.getElementById("button-container");
 var current_weatherEl = document.getElementById("current-weather");
 var forecastEl = document.getElementById("forecast");
+var historyEl = document.getElementById("history");
 
 
 //fetch weather data
@@ -21,7 +22,9 @@ var getWeather = (city) => {
                         if(response.ok)
                         {
                             response.json()
-                            .then(data2 => set_current_weather(data.name,data.sys.country,units,data2));
+                            .then(data2 => {
+                                set_current_weather(data.name,data.sys.country,units,data2);
+                            });
                         } else {
                            console.log("Response error on onecall fetch");
                            current_weatherEl.textContent = "No Response from Openweather API";
@@ -43,12 +46,51 @@ var getWeather = (city) => {
     });
 };
 
+var buttonhandler_search = event => {
+    event.preventDefault();
+    var button_type = event.target.getAttribute("data-value");
+    switch (button_type) {
+        case "search":
+            reset();
+            getCity();
+            break;
+        case "clear":
+            localStorage.removeItem("w_dashboard");
+            load_history();
+            break;
+    }    
+};
+
+var buttonhandler_history = event => {
+    event.preventDefault();
+    var button_type = event.target.getAttribute("data-city");
+    if(button_type) {    
+        reset();  
+        getWeather(button_type);       
+    }
+   
+};
+
+var reset = () => {
+          //Reset DOM
+          current_weatherEl.textContent = "";
+          current_weatherEl.classList.remove("black-border");
+          while(current_weatherEl.firstChild){
+              current_weatherEl.removeChild(current_weatherEl.firstChild);
+          }
+          while(forecastEl.firstChild){
+              forecastEl.removeChild(forecastEl.firstChild);
+          }
+};
+
 //get city from input textbox
-var getCity = event => {
-event.preventDefault();
+var getCity = () => {
 city = citysearchEl.value;
     if(city) {
         getWeather(city);
+        save_data(city);
+        load_history();
+        citysearchEl.value = "";
     } else {
         alert("Please enter a city!");
     }
@@ -131,11 +173,6 @@ city = citysearchEl.value;
 
  var set_forecast = (date,data,unit) => {
 
-    //Reset Variables
-    while(forecastEl.firstChild){
-        forecastEl.removeChild(forecastEl.firstChild);
-    }
-
     //5-Day Forecast Title Text
     var forecast_titleEl = document.createElement("div");
     forecast_titleEl.id = "forecast-title";
@@ -188,8 +225,52 @@ city = citysearchEl.value;
     }
  };
 
+ var save_data = (city) => {
+    var saved = JSON.parse(localStorage.getItem("w_dashboard")) || [];
+    if(saved.length < 10)
+    {
+    saved.unshift(city);
+    } else {
+        var temp_array = [];
+        temp_array.push(city);
+        for(let i = 0; i < saved.length-1;i++)
+        {
+            temp_array.push(saved[i]);
+        }
+        saved = temp_array;
+    }
+    localStorage.setItem("w_dashboard", JSON.stringify(saved));
+ };
+
+var load_history = () => {
+    var history = JSON.parse(localStorage.getItem("w_dashboard")) || [];
+
+    //Clean DOM 
+    while(historyEl.firstChild)
+    {
+        historyEl.removeChild(historyEl.firstChild);
+    }
+
+    if(history)
+    {
+        for(let i = 0; i < history.length; i++)
+        {
+            var button_El = document.createElement("button");
+            button_El.classList = "button color-grey";
+            button_El.setAttribute("data-city", history[i]);
+            button_El.textContent = history[i];
+            historyEl.appendChild(button_El);
+
+        }
+    } else {
+        return;
+    }
+};
+
 //add click event to search button
-searchbuttonEl.onclick = getCity;
+searchbuttonEl.onclick = buttonhandler_search;
+historyEl.onclick = buttonhandler_history;
+load_history();
 
 
 
