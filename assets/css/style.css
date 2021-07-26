@@ -19,6 +19,14 @@ header {
     margin-top: 15px;
 }
 
+#title_contaier {
+ display: flex;  
+ flex-wrap: wrap;
+ margin: 0 0; 
+}
+
+
+
 form {
     border-bottom: 3px solid rgb(117,117,117);
     margin-bottom: 15px;
@@ -104,6 +112,7 @@ button.color-grey:hover {
 }
 
 #current-weather h2 {
+    padding: 10px 0;
     font-size: 2rem;
     font-weight: bolder;
 }

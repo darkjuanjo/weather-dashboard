@@ -103,6 +103,7 @@ city = citysearchEl.value;
         var date = moment().format("M/D/YYYY");
 
         //create DOM Elements
+        var titlecontainerEl = document.createElement("div");
         var titleEl = document.createElement("h2");
         var iconEl = document.createElement("img");
         var tempEl = document.createElement("h3");
@@ -124,6 +125,8 @@ city = citysearchEl.value;
         //Add text to DOM Elements
             titleEl.textContent = `${city}, ${country} (${date})`;
             iconEl.src = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`;
+            iconEl.id = "current_icon";
+            titlecontainerEl.id ="title_contaier";
             if(unit === "imperial")
             {
             tempEl.textContent = `Temp: ${data.current.temp}°F (Feels like: ${data.current.feels_like}°F)`;
@@ -155,8 +158,9 @@ city = citysearchEl.value;
             }
             
         //Attach DOM Elements
-        titleEl.appendChild(iconEl);
-        current_weatherEl.appendChild(titleEl);
+        titlecontainerEl.appendChild(titleEl);
+        titlecontainerEl.appendChild(iconEl);
+        current_weatherEl.appendChild(titlecontainerEl);;
         current_weatherEl.appendChild(tempEl);
         current_weatherEl.appendChild(windEl);
         current_weatherEl.appendChild(humidityEl);
