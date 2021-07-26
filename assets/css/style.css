@@ -145,6 +145,10 @@ margin: 10px 5px;
     margin: 15px 0;
 }
 
+#current-weather h3 span:hover{
+    cursor: pointer;
+}
+
 #uv-good{
  background-color: rgb(41,149,1);
  padding: 5px 10px;

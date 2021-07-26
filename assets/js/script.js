@@ -179,6 +179,11 @@ console.log()
         //Add border to current weather container
         current_weatherEl.className = "black-border"
 
+        //Adding click events
+        riskfactorEl.addEventListener("click", ()=> {
+            window.open("https://www.aimatmelanoma.org/melanoma-101/prevention/what-is-ultraviolet-uv-radiation/", "_blank");
+        });
+
             //set 5-day forecast
             set_forecast(date,data.daily,unit);
     }    
