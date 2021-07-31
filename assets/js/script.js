@@ -1,21 +1,21 @@
-var citysearchEl = document.getElementById("search");
-var searchbuttonEl = document.getElementById("button-container");
-var current_weatherEl = document.getElementById("current-weather");
-var forecastEl = document.getElementById("forecast");
+var citySearchEl = document.getElementById("search");
+var searchButtonEl = document.getElementById("button-container");
+var currentWeatherEl = document.getElementById("current-weather");
+var foreCastEl = document.getElementById("forecast");
 var historyEl = document.getElementById("history");
-var unit_selection = document.getElementsByName("unit");
+var unitSelection = document.getElementsByName("unit");
 
 
 //fetch weather data
 var getWeather = (city) => {
   var key =  "f7bc6ba9663ff374404b0d7dc50e859d";
   var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
-  if(unit_selection[0].checked)
+  if(unitSelection[0].checked)
   {
-     var units = unit_selection[0].value;
+     var units = unitSelection[0].value;
   }
   else {
-    var units = unit_selection[1].value;
+    var units = unitSelection[1].value;
   }
   
     fetch(apiUrl)
@@ -35,22 +35,22 @@ var getWeather = (city) => {
                             });
                         } else {
                            console.log("Response error on onecall fetch");
-                           current_weatherEl.textContent = "No Response from Openweather API";
-                           current_weatherEl.classList.remove("black-border");
+                           currentWeatherEl.textContent = "No Response from Openweather API";
+                           currentWeatherEl.classList.remove("black-border");
                         }
                     })
 
             });       
         } else {
             console.log("Response error on current weather fetch");
-            current_weatherEl.textContent = "No Response from Openweather API";
-            current_weatherEl.classList.remove("black-border");
+            currentWeatherEl.textContent = "No Response from Openweather API";
+            currentWeatherEl.classList.remove("black-border");
         }
     })
     .catch(error => {
         console.log("No Internet Connection");
-            current_weatherEl.textContent = "No Internet Connection";
-            current_weatherEl.classList.remove("black-border");
+            currentWeatherEl.textContent = "No Internet Connection";
+            currentWeatherEl.classList.remove("black-border");
     });
 };
 
@@ -81,25 +81,25 @@ var buttonhandler_history = event => {
 
 var reset = () => {
           //Reset DOM
-          current_weatherEl.textContent = "";
-          current_weatherEl.classList.remove("black-border");
-          while(current_weatherEl.firstChild){
-              current_weatherEl.removeChild(current_weatherEl.firstChild);
+          currentWeatherEl.textContent = "";
+          currentWeatherEl.classList.remove("black-border");
+          while(currentWeatherEl.firstChild){
+              currentWeatherEl.removeChild(currentWeatherEl.firstChild);
           }
-          while(forecastEl.firstChild){
-              forecastEl.removeChild(forecastEl.firstChild);
+          while(foreCastEl.firstChild){
+              foreCastEl.removeChild(foreCastEl.firstChild);
           }
 };
 
 //get city from input textbox
 var getCity = () => {
-city = citysearchEl.value;
+city = citySearchEl.value;
 console.log()
     if(city) {
         getWeather(city);
         save_data(city);
         load_history();
-        citysearchEl.value = "";
+        citySearchEl.value = "";
     } else {
         alert("Please enter a city!");
     }
@@ -112,14 +112,14 @@ console.log()
         var date = moment().format("M/D/YYYY");
 
         //create DOM Elements
-        var titlecontainerEl = document.createElement("div");
+        var titleContainerEl = document.createElement("div");
         var titleEl = document.createElement("h2");
         var iconEl = document.createElement("img");
         var tempEl = document.createElement("h3");
         var windEl = document.createElement("h3");
         var humidityEl = document.createElement("h3");
-        var uv_indexEl = document.createElement("h3");
-        var riskfactorEl = document.createElement("span");
+        var uvIndexEl = document.createElement("h3");
+        var riskFactorEl = document.createElement("span");
 
         //Reset Variables
         titleEl.textContent = "";
@@ -127,15 +127,15 @@ console.log()
         tempEl.textContent = "";
         windEl.textContent = "";
         humidityEl.textContent = "";
-        uv_indexEl.textContent = "";
-        riskfactorEl.textContent = "";
-        riskfactorEl.id = "";
+        uvIndexEl.textContent = "";
+        riskFactorEl.textContent = "";
+        riskFactorEl.id = "";
         
         //Add text to DOM Elements
             titleEl.textContent = `${city}, ${country} (${date})`;
             iconEl.src = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`;
             iconEl.id = "current_icon";
-            titlecontainerEl.id ="title_contaier";
+            titleContainerEl.id ="title_contaier";
             if(unit === "imperial")
             {
             tempEl.textContent = `Temp: ${data.current.temp}°F (Feels like: ${data.current.feels_like}°F)`;
@@ -146,41 +146,41 @@ console.log()
                 windEl.textContent = "Wind: " + data.current.wind_speed + " KPH";
              }    
              humidityEl.textContent = "Humidity: " + data.current.humidity + " %";
-             uv_indexEl.textContent = "UV Index: ";
-             riskfactorEl.textContent = data.current.uvi;
+             uvIndexEl.textContent = "UV Index: ";
+             riskFactorEl.textContent = data.current.uvi;
 
             if(data.current.uvi <= 2)
             {
-                riskfactorEl.id = "uv-good"
+                riskFactorEl.id = "uv-good"
             } else if (data.current.uvi >= 3 && data.current.uvi <= 5 )
             {
-                riskfactorEl.id = "uv-ok"
+                riskFactorEl.id = "uv-ok"
             } else if (data.current.uvi >= 6 && data.current.uvi <= 7 )
             {
-                riskfactorEl.id = "uv-bad"
+                riskFactorEl.id = "uv-bad"
             } else if (data.current.uvi >= 8 && data.current.uvi <= 10 )
             {
-                riskfactorEl.id = "uv-danger"
+                riskFactorEl.id = "uv-danger"
             } else if (data.current.uvi >= 11 )
             {
-                riskfactorEl.id = "uv-death"
+                riskFactorEl.id = "uv-death"
             }
             
         //Attach DOM Elements
-        titlecontainerEl.appendChild(titleEl);
-        titlecontainerEl.appendChild(iconEl);
-        current_weatherEl.appendChild(titlecontainerEl);;
-        current_weatherEl.appendChild(tempEl);
-        current_weatherEl.appendChild(windEl);
-        current_weatherEl.appendChild(humidityEl);
-        uv_indexEl.appendChild(riskfactorEl);
-        current_weatherEl.appendChild(uv_indexEl);
+        titleContainerEl.appendChild(titleEl);
+        titleContainerEl.appendChild(iconEl);
+        currentWeatherEl.appendChild(titleContainerEl);;
+        currentWeatherEl.appendChild(tempEl);
+        currentWeatherEl.appendChild(windEl);
+        currentWeatherEl.appendChild(humidityEl);
+        uvIndexEl.appendChild(riskFactorEl);
+        currentWeatherEl.appendChild(uvIndexEl);
 
         //Add border to current weather container
-        current_weatherEl.className = "black-border"
+        currentWeatherEl.className = "black-border"
 
         //Adding click events
-        riskfactorEl.addEventListener("click", ()=> {
+        riskFactorEl.addEventListener("click", ()=> {
             window.open("https://www.aimatmelanoma.org/melanoma-101/prevention/what-is-ultraviolet-uv-radiation/", "_blank");
         });
 
@@ -192,20 +192,20 @@ console.log()
  var set_forecast = (date,data,unit) => {
 
     //5-Day Forecast Title Text
-    var forecast_titleEl = document.createElement("div");
-    forecast_titleEl.id = "forecast-title";
+    var foreCastTitleEl = document.createElement("div");
+    foreCastTitleEl.id = "forecast-title";
     var titleEl = document.createElement("h3");
     titleEl.textContent = "5-Day Forecast:";
-    forecast_titleEl.appendChild(titleEl);
-    forecastEl.appendChild(forecast_titleEl);
+    foreCastTitleEl.appendChild(titleEl);
+    foreCastEl.appendChild(foreCastTitleEl);
    
     //Generate cards with 5 day forecast
     for(let i = 1; i < 6; i++)
     {
         //Generate DOM Elements
         var cardEl = document.createElement("div");
-        var forecastdate = document.createElement("h4");
-        var icon_container = document.createElement("p");
+        var foreCastDateEl = document.createElement("h4");
+        var iconContainerEl = document.createElement("p");
         var icon = document.createElement("img");
         var tempEl = document.createElement("p");
         var windEl = document.createElement("p");
@@ -215,7 +215,7 @@ console.log()
         cardEl.className = "card";
 
         //Generate days
-        forecastdate.textContent = moment(date, "M/D/YYYY").add(i,"days").format("M/D/YYYY");
+        foreCastDateEl.textContent = moment(date, "M/D/YYYY").add(i,"days").format("M/D/YYYY");
 
         //Get Icon
         icon.src = `http://openweathermap.org/img/wn/${data[i].weather[0].icon}.png`;
@@ -233,13 +233,13 @@ console.log()
         humidityEl.textContent = `Humidity: ${data[i].humidity} %`;
 
         //Add to forecast container
-        icon_container.appendChild(icon);
-        cardEl.appendChild(forecastdate);
-        cardEl.appendChild(icon_container);
+        iconContainerEl.appendChild(icon);
+        cardEl.appendChild(foreCastDateEl);
+        cardEl.appendChild(iconContainerEl);
         cardEl.appendChild(tempEl);
         cardEl.appendChild(windEl);
         cardEl.appendChild(humidityEl);
-        forecastEl.appendChild(cardEl);
+        foreCastEl.appendChild(cardEl);
     }
  };
 
@@ -286,7 +286,7 @@ var load_history = () => {
 };
 
 //add click event to search button
-searchbuttonEl.onclick = buttonhandler_search;
+searchButtonEl.onclick = buttonhandler_search;
 historyEl.onclick = buttonhandler_history;
 load_history();
 
